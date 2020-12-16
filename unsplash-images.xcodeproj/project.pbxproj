@@ -9,23 +9,27 @@
 /* Begin PBXBuildFile section */
 		93311B8E1A89E4874E6A2EA4 /* Pods_unsplash_images.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634BAD3A502AE1F2B1EE03E2 /* Pods_unsplash_images.framework */; };
 		EC4DF1BC258919C9001D92A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DF1BB258919C9001D92A2 /* AppDelegate.swift */; };
-		EC4DF1BE258919C9001D92A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DF1BD258919C9001D92A2 /* SceneDelegate.swift */; };
 		EC4DF1C0258919C9001D92A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DF1BF258919C9001D92A2 /* ViewController.swift */; };
 		EC4DF1C3258919C9001D92A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C1258919C9001D92A2 /* Main.storyboard */; };
 		EC4DF1C5258919CB001D92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C4258919CB001D92A2 /* Assets.xcassets */; };
 		EC4DF1C8258919CB001D92A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C6258919CB001D92A2 /* LaunchScreen.storyboard */; };
+		EC75E26A258A4DAA002A7A9A /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E269258A4DAA002A7A9A /* APIService.swift */; };
+		EC75E26F258A50FB002A7A9A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E26E258A50FB002A7A9A /* Image.swift */; };
+		EC75E273258A51AE002A7A9A /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E272258A51AE002A7A9A /* URLs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		634BAD3A502AE1F2B1EE03E2 /* Pods_unsplash_images.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unsplash_images.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC4DF1B8258919C9001D92A2 /* unsplash-images.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unsplash-images.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC4DF1BB258919C9001D92A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EC4DF1BD258919C9001D92A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		EC4DF1BF258919C9001D92A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EC4DF1C2258919C9001D92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC4DF1C4258919CB001D92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC4DF1C7258919CB001D92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC4DF1C9258919CB001D92A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC75E269258A4DAA002A7A9A /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		EC75E26E258A50FB002A7A9A /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		EC75E272258A51AE002A7A9A /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		F1A642DDCA8728482DC7FC3A /* Pods-unsplash-images.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.debug.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE9FA676DBFB8A06153C869 /* Pods-unsplash-images.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.release.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,7 +52,6 @@
 				F1A642DDCA8728482DC7FC3A /* Pods-unsplash-images.debug.xcconfig */,
 				FBE9FA676DBFB8A06153C869 /* Pods-unsplash-images.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -81,15 +84,33 @@
 		EC4DF1BA258919C9001D92A2 /* unsplash-images */ = {
 			isa = PBXGroup;
 			children = (
+				EC75E26D258A50EE002A7A9A /* Views */,
+				EC75E26C258A50EA002A7A9A /* Model */,
 				EC4DF1BB258919C9001D92A2 /* AppDelegate.swift */,
-				EC4DF1BD258919C9001D92A2 /* SceneDelegate.swift */,
 				EC4DF1BF258919C9001D92A2 /* ViewController.swift */,
 				EC4DF1C1258919C9001D92A2 /* Main.storyboard */,
 				EC4DF1C4258919CB001D92A2 /* Assets.xcassets */,
 				EC4DF1C6258919CB001D92A2 /* LaunchScreen.storyboard */,
 				EC4DF1C9258919CB001D92A2 /* Info.plist */,
+				EC75E269258A4DAA002A7A9A /* APIService.swift */,
 			);
 			path = "unsplash-images";
+			sourceTree = "<group>";
+		};
+		EC75E26C258A50EA002A7A9A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EC75E26E258A50FB002A7A9A /* Image.swift */,
+				EC75E272258A51AE002A7A9A /* URLs.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EC75E26D258A50EE002A7A9A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,9 +209,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC75E273258A51AE002A7A9A /* URLs.swift in Sources */,
 				EC4DF1C0258919C9001D92A2 /* ViewController.swift in Sources */,
+				EC75E26F258A50FB002A7A9A /* Image.swift in Sources */,
+				EC75E26A258A4DAA002A7A9A /* APIService.swift in Sources */,
 				EC4DF1BC258919C9001D92A2 /* AppDelegate.swift in Sources */,
-				EC4DF1BE258919C9001D92A2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +364,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8BTFB678DQ;
 				INFOPLIST_FILE = "unsplash-images/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -348,7 +372,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.axekoder.back.unsplash-images";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -361,6 +385,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8BTFB678DQ;
 				INFOPLIST_FILE = "unsplash-images/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -368,7 +393,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.axekoder.back.unsplash-images";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
