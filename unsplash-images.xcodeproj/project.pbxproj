@@ -16,6 +16,11 @@
 		EC75E26A258A4DAA002A7A9A /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E269258A4DAA002A7A9A /* APIService.swift */; };
 		EC75E26F258A50FB002A7A9A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E26E258A50FB002A7A9A /* Image.swift */; };
 		EC75E273258A51AE002A7A9A /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E272258A51AE002A7A9A /* URLs.swift */; };
+		EC75E279258B9345002A7A9A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E278258B9345002A7A9A /* ListViewController.swift */; };
+		EC75E27C258B9372002A7A9A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E27B258B9372002A7A9A /* User.swift */; };
+		EC75E27F258B9942002A7A9A /* ListImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E27E258B9942002A7A9A /* ListImageCell.swift */; };
+		EC75E282258B9F14002A7A9A /* ImageListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E281258B9F14002A7A9A /* ImageListModel.swift */; };
+		EC75E286258BA280002A7A9A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E285258BA280002A7A9A /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		EC75E269258A4DAA002A7A9A /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		EC75E26E258A50FB002A7A9A /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		EC75E272258A51AE002A7A9A /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		EC75E278258B9345002A7A9A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		EC75E27B258B9372002A7A9A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		EC75E27E258B9942002A7A9A /* ListImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListImageCell.swift; sourceTree = "<group>"; };
+		EC75E281258B9F14002A7A9A /* ImageListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListModel.swift; sourceTree = "<group>"; };
+		EC75E285258BA280002A7A9A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F1A642DDCA8728482DC7FC3A /* Pods-unsplash-images.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.debug.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE9FA676DBFB8A06153C869 /* Pods-unsplash-images.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.release.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,7 +94,9 @@
 		EC4DF1BA258919C9001D92A2 /* unsplash-images */ = {
 			isa = PBXGroup;
 			children = (
-				EC75E26D258A50EE002A7A9A /* Views */,
+				EC75E284258BA26B002A7A9A /* Util */,
+				EC75E277258B930C002A7A9A /* Cell */,
+				EC75E26D258A50EE002A7A9A /* View */,
 				EC75E26C258A50EA002A7A9A /* Model */,
 				EC4DF1BB258919C9001D92A2 /* AppDelegate.swift */,
 				EC4DF1BF258919C9001D92A2 /* ViewController.swift */,
@@ -102,15 +114,34 @@
 			children = (
 				EC75E26E258A50FB002A7A9A /* Image.swift */,
 				EC75E272258A51AE002A7A9A /* URLs.swift */,
+				EC75E27B258B9372002A7A9A /* User.swift */,
+				EC75E281258B9F14002A7A9A /* ImageListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		EC75E26D258A50EE002A7A9A /* Views */ = {
+		EC75E26D258A50EE002A7A9A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EC75E278258B9345002A7A9A /* ListViewController.swift */,
 			);
-			path = Views;
+			path = View;
+			sourceTree = "<group>";
+		};
+		EC75E277258B930C002A7A9A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EC75E27E258B9942002A7A9A /* ListImageCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		EC75E284258BA26B002A7A9A /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				EC75E285258BA280002A7A9A /* Extensions.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,11 +240,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC75E282258B9F14002A7A9A /* ImageListModel.swift in Sources */,
 				EC75E273258A51AE002A7A9A /* URLs.swift in Sources */,
 				EC4DF1C0258919C9001D92A2 /* ViewController.swift in Sources */,
+				EC75E279258B9345002A7A9A /* ListViewController.swift in Sources */,
 				EC75E26F258A50FB002A7A9A /* Image.swift in Sources */,
+				EC75E286258BA280002A7A9A /* Extensions.swift in Sources */,
 				EC75E26A258A4DAA002A7A9A /* APIService.swift in Sources */,
+				EC75E27F258B9942002A7A9A /* ListImageCell.swift in Sources */,
 				EC4DF1BC258919C9001D92A2 /* AppDelegate.swift in Sources */,
+				EC75E27C258B9372002A7A9A /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +397,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8BTFB678DQ;
 				INFOPLIST_FILE = "unsplash-images/Info.plist";
@@ -371,6 +408,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.axekoder.back.unsplash-images";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -382,6 +420,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8BTFB678DQ;
 				INFOPLIST_FILE = "unsplash-images/Info.plist";
@@ -392,6 +431,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.axekoder.back.unsplash-images";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -23,25 +23,22 @@ struct APIService {
         return nil
     }
     
-    static func getList() {
+    static func getList(completion: @escaping (Result<[Image], Error>) -> Void) {
         guard let urlRequest = urlRequest else { return }
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let data = data {
                 do {
                     let images = try JSONDecoder().decode([Image].self, from: data)
-                    let ids = images.map {
-                        print($0.id)
-                    }
+                    print(images)
+                    return completion(.success(images))
                     
                 } catch let error {
                     print(error)
+                    return completion(.failure(error))
                 }
-                
             }
-            
         }.resume()
     }
-    
 }
 
 
