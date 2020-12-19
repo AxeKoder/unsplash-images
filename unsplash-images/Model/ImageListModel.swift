@@ -15,7 +15,19 @@ struct ImageListModel {
         }
     }
     
+    func parseImageDetail(images: [Image]) -> [DetailImageCell.CellData] {
+        return images.map {
+            (name: $0.user?.name, imageUrl: $0.urls.regular, width: $0.width, height: $0.height)
+        }
+    }
+    
     func parseToDetail(images: [ListImageCell.CellData]) -> [DetailImageCell.CellData] {
+        return images.map {
+            (name: $0.name, imageUrl: $0.imageUrl, width: $0.width, height: $0.height)
+        }
+    }
+    
+    func parseToList(images: [DetailImageCell.CellData]) -> [ListImageCell.CellData] {
         return images.map {
             (name: $0.name, imageUrl: $0.imageUrl, width: $0.width, height: $0.height)
         }

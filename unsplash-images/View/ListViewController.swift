@@ -65,8 +65,12 @@ class ListViewController: UIViewController {
 }
 
 extension ListViewController: PresentedViewControllerDelegate {
-    func presentedBeingDismissed(indexPath: IndexPath) {
-        tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+    func presentedBeingDismissed(indexPath: IndexPath, cellData: [ListImageCell.CellData]) {
+        self.cellData = cellData
+        tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+        }
     }
 }
 
@@ -95,14 +99,13 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2, animations: { [weak self] in
             self?.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
-        }, completion: { [weak self, cellData] _ in
+        }, completion: { [weak self, cellData, currentPage] _ in
             let model = ImageListModel()
             let detailCellData = model.parseToDetail(images: cellData)
-            let detailViewData = (index: indexPath.row, listData: detailCellData)
+            let detailViewData = (index: indexPath.row, page: currentPage, listData: detailCellData)
             self?.performSegue(withIdentifier: ListViewController.idSegueDetail, sender: detailViewData)
         })
         

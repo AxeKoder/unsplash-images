@@ -23,24 +23,8 @@ class ListImageCell: UITableViewCell {
         guard let imageUrl = data.imageUrl else { return }
         tag = index
         userName.text = data.name ?? ""
-        setImageFromURL(rowIndex: index, url: imageUrl)
-        
+        setImageFromURL(tagNumber: index, url: imageUrl, imageView: listImage)   
     }
-    
-    func setImageFromURL(rowIndex: Int, url: String) {
-        DispatchQueue.global().async {
-            let imageData = NSData.init(contentsOf: NSURL.init(string: url)! as URL)
-            DispatchQueue.main.async { [weak self] in
-                if self?.tag == rowIndex {
-                    let image = UIImage.init(data: imageData! as Data)
-                    self?.listImage.image = image
-                } else {
-                    print("cell index not match tag!!!")
-                }
-            }
-        }
-    }
-
 }
 
 

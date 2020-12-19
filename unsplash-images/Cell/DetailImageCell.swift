@@ -14,8 +14,8 @@ class DetailImageCell: UICollectionViewCell {
     
     @IBOutlet weak var detailImage: UIImageView!
     
-    func setData(data: CellData) {
+    func setData(index: Int, data: CellData) {
         guard let imageUrl = data.imageUrl else { return }
-        detailImage.setImageFromURL(url: imageUrl)
+        setImageFromURL(tagNumber: index, url: imageUrl, imageView: detailImage)
     }
 }

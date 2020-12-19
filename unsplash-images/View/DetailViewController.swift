@@ -8,16 +8,17 @@
 import UIKit
 
 protocol PresentedViewControllerDelegate {
-    func presentedBeingDismissed(indexPath: IndexPath)
+    func presentedBeingDismissed(indexPath: IndexPath, cellData: [ListImageCell.CellData])
 }
 
 class DetailViewController: UIViewController {
-    typealias DetailData = (index: Int, listData: [DetailImageCell.CellData])
+    typealias DetailData = (index: Int, page: Int, listData: [DetailImageCell.CellData])
 
     @IBOutlet weak var collectionView: UICollectionView!
     var selectedIndex: Int = 0
+    var currentPage: Int = 0
     var currentIndexPath: IndexPath = IndexPath()
-    var listData: [DetailImageCell.CellData] = []
+    var cellData: [DetailImageCell.CellData] = []
     var isScrollDone = false
     var delegate: PresentedViewControllerDelegate?
     
@@ -26,7 +27,7 @@ class DetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .black
-//        view.alpha = 0
+        view.alpha = 0
         
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -42,20 +43,37 @@ class DetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        delegate?.presentedBeingDismissed(indexPath: currentIndexPath)
+        let model = ImageListModel()
+        delegate?.presentedBeingDismissed(indexPath: currentIndexPath, cellData: model.parseToList(images: cellData))
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-//        UIView.animate(withDuration: 0.1, delay: 0.2, animations: { [weak self] in
-//            self?.view.alpha = 1.0
-//        })
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.view.alpha = 1.0
+        })
     }
     
     func setData(_ data: DetailData) {
         selectedIndex = data.index
-        listData = data.listData
+        cellData = data.listData
+        currentPage = data.page
+    }
+    
+    func callListApi(listModel: ImageListModel = ImageListModel()) {
+        listModel.getImageList(page: currentPage, completion: { [weak self] in
+            switch $0 {
+            case .success(let images):
+                self?.cellData.append(contentsOf: listModel.parseImageDetail(images: images))
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        })
     }
     
     @IBAction func onBack(_ sender: Any) {
@@ -76,12 +94,12 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return listData.count
+        return cellData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailImageCell.identifier, for: indexPath) as! DetailImageCell
-        cell.setData(data: listData[indexPath.row])
+        cell.setData(index: indexPath.row, data: cellData[indexPath.row])
         return cell
     }
     
@@ -93,6 +111,10 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if !isScrollDone {
             collectionView.scrollToItem(at: IndexPath(row: selectedIndex, section: 0), at: .centeredVertically, animated: false)
             isScrollDone = true
+        }
+        if indexPath.row == cellData.count - 1 {
+            currentPage += 1
+            callListApi()
         }
         currentIndexPath = indexPath
     }

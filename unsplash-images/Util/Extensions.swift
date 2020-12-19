@@ -18,3 +18,25 @@ extension UIImageView {
         }
     }
 }
+
+extension UIView {
+    func setImageFromURL(tagNumber: Int, url: String, imageView: UIImageView) {
+        tag = tagNumber
+        if let image = ImageCacheService.shared.getCache(key: url) {
+            imageView.image = image
+        }
+        DispatchQueue.global().async {
+            let imageData = NSData.init(contentsOf: NSURL.init(string: url)! as URL)
+            guard let data = imageData else { return }
+            let image = UIImage.init(data: data as Data)
+            ImageCacheService.shared.setCache(key: url, value: image)
+            DispatchQueue.main.async { [weak self] in
+                if self?.tag == tagNumber {
+                    imageView.image = image
+                } else {
+                    print("cell index not match tag!!!")
+                }
+            }
+        }
+    }
+}

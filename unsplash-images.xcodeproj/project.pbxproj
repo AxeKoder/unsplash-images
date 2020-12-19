@@ -22,6 +22,7 @@
 		EC75E286258BA280002A7A9A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E285258BA280002A7A9A /* Extensions.swift */; };
 		ECBE1E7E258DDDA200B4AD86 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE1E7D258DDDA200B4AD86 /* DetailViewController.swift */; };
 		ECBE1E81258DDFAD00B4AD86 /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE1E80258DDFAD00B4AD86 /* DetailImageCell.swift */; };
+		ECBE1E88258E566D00B4AD86 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE1E87258E566D00B4AD86 /* ImageCacheService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		EC75E285258BA280002A7A9A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		ECBE1E7D258DDDA200B4AD86 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		ECBE1E80258DDFAD00B4AD86 /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
+		ECBE1E87258E566D00B4AD86 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		F1A642DDCA8728482DC7FC3A /* Pods-unsplash-images.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.debug.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE9FA676DBFB8A06153C869 /* Pods-unsplash-images.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.release.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				EC75E269258A4DAA002A7A9A /* APIService.swift */,
+				ECBE1E87258E566D00B4AD86 /* ImageCacheService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 			files = (
 				ECBE1E7E258DDDA200B4AD86 /* DetailViewController.swift in Sources */,
 				EC75E282258B9F14002A7A9A /* ImageListModel.swift in Sources */,
+				ECBE1E88258E566D00B4AD86 /* ImageCacheService.swift in Sources */,
 				ECBE1E81258DDFAD00B4AD86 /* DetailImageCell.swift in Sources */,
 				EC75E273258A51AE002A7A9A /* URLs.swift in Sources */,
 				EC75E279258B9345002A7A9A /* ListViewController.swift in Sources */,
