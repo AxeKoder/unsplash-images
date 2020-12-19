@@ -49,7 +49,10 @@ class DetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        animateFadeIn()
+    }
+    
+    func animateFadeIn() {
         UIView.animate(withDuration: 0.2, animations: { [weak self] in
             self?.view.alpha = 1.0
         })
