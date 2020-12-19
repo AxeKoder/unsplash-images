@@ -14,8 +14,10 @@ struct APIService {
         static var accessKey: String = "Client-ID LcBxNek8tRsRjANLMvdV4t_Xz0Pf1fyBOzXow03G3Ps"
     }
     
-    private static var urlRequest: URLRequest? {
-        if let url = URL.with(string: "/photos") {
+    private static func urlList(_ page: Int?, _ per_page: Int?) -> URLRequest? {
+        let page = page ?? 0
+        let per_page = per_page ?? 15
+        if let url = URL.with(string: "/photos?page=\(page)&per_page=\(per_page)") {
             var urlRequest = URLRequest(url: url)
             urlRequest.setValue(Config.accessKey, forHTTPHeaderField: Config.authHeaderField)
             return urlRequest
@@ -23,8 +25,8 @@ struct APIService {
         return nil
     }
     
-    static func getList(completion: @escaping (Result<[Image], Error>) -> Void) {
-        guard let urlRequest = urlRequest else { return }
+    static func getList(page: Int?, per_page: Int?, completion: @escaping (Result<[Image], Error>) -> Void) {
+        guard let urlRequest = urlList(page, per_page) else { return }
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let data = data {
                 do {
@@ -40,6 +42,7 @@ struct APIService {
         }.resume()
     }
 }
+
 
 
 extension URL {

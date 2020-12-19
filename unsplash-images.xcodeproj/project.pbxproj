@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		93311B8E1A89E4874E6A2EA4 /* Pods_unsplash_images.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634BAD3A502AE1F2B1EE03E2 /* Pods_unsplash_images.framework */; };
 		EC4DF1BC258919C9001D92A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DF1BB258919C9001D92A2 /* AppDelegate.swift */; };
-		EC4DF1C0258919C9001D92A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4DF1BF258919C9001D92A2 /* ViewController.swift */; };
 		EC4DF1C3258919C9001D92A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C1258919C9001D92A2 /* Main.storyboard */; };
 		EC4DF1C5258919CB001D92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C4258919CB001D92A2 /* Assets.xcassets */; };
 		EC4DF1C8258919CB001D92A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C6258919CB001D92A2 /* LaunchScreen.storyboard */; };
@@ -21,13 +20,14 @@
 		EC75E27F258B9942002A7A9A /* ListImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E27E258B9942002A7A9A /* ListImageCell.swift */; };
 		EC75E282258B9F14002A7A9A /* ImageListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E281258B9F14002A7A9A /* ImageListModel.swift */; };
 		EC75E286258BA280002A7A9A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E285258BA280002A7A9A /* Extensions.swift */; };
+		ECBE1E7E258DDDA200B4AD86 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE1E7D258DDDA200B4AD86 /* DetailViewController.swift */; };
+		ECBE1E81258DDFAD00B4AD86 /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE1E80258DDFAD00B4AD86 /* DetailImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		634BAD3A502AE1F2B1EE03E2 /* Pods_unsplash_images.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unsplash_images.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC4DF1B8258919C9001D92A2 /* unsplash-images.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unsplash-images.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC4DF1BB258919C9001D92A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EC4DF1BF258919C9001D92A2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EC4DF1C2258919C9001D92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC4DF1C4258919CB001D92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC4DF1C7258919CB001D92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,6 +40,8 @@
 		EC75E27E258B9942002A7A9A /* ListImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListImageCell.swift; sourceTree = "<group>"; };
 		EC75E281258B9F14002A7A9A /* ImageListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListModel.swift; sourceTree = "<group>"; };
 		EC75E285258BA280002A7A9A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		ECBE1E7D258DDDA200B4AD86 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		ECBE1E80258DDFAD00B4AD86 /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
 		F1A642DDCA8728482DC7FC3A /* Pods-unsplash-images.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.debug.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.debug.xcconfig"; sourceTree = "<group>"; };
 		FBE9FA676DBFB8A06153C869 /* Pods-unsplash-images.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unsplash-images.release.xcconfig"; path = "Target Support Files/Pods-unsplash-images/Pods-unsplash-images.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,17 +96,16 @@
 		EC4DF1BA258919C9001D92A2 /* unsplash-images */ = {
 			isa = PBXGroup;
 			children = (
+				ECBE1E83258E447D00B4AD86 /* Service */,
 				EC75E284258BA26B002A7A9A /* Util */,
 				EC75E277258B930C002A7A9A /* Cell */,
 				EC75E26D258A50EE002A7A9A /* View */,
 				EC75E26C258A50EA002A7A9A /* Model */,
 				EC4DF1BB258919C9001D92A2 /* AppDelegate.swift */,
-				EC4DF1BF258919C9001D92A2 /* ViewController.swift */,
 				EC4DF1C1258919C9001D92A2 /* Main.storyboard */,
 				EC4DF1C4258919CB001D92A2 /* Assets.xcassets */,
 				EC4DF1C6258919CB001D92A2 /* LaunchScreen.storyboard */,
 				EC4DF1C9258919CB001D92A2 /* Info.plist */,
-				EC75E269258A4DAA002A7A9A /* APIService.swift */,
 			);
 			path = "unsplash-images";
 			sourceTree = "<group>";
@@ -124,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				EC75E278258B9345002A7A9A /* ListViewController.swift */,
+				ECBE1E7D258DDDA200B4AD86 /* DetailViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				EC75E27E258B9942002A7A9A /* ListImageCell.swift */,
+				ECBE1E80258DDFAD00B4AD86 /* DetailImageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -142,6 +145,14 @@
 				EC75E285258BA280002A7A9A /* Extensions.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		ECBE1E83258E447D00B4AD86 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				EC75E269258A4DAA002A7A9A /* APIService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,9 +251,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECBE1E7E258DDDA200B4AD86 /* DetailViewController.swift in Sources */,
 				EC75E282258B9F14002A7A9A /* ImageListModel.swift in Sources */,
+				ECBE1E81258DDFAD00B4AD86 /* DetailImageCell.swift in Sources */,
 				EC75E273258A51AE002A7A9A /* URLs.swift in Sources */,
-				EC4DF1C0258919C9001D92A2 /* ViewController.swift in Sources */,
 				EC75E279258B9345002A7A9A /* ListViewController.swift in Sources */,
 				EC75E26F258A50FB002A7A9A /* Image.swift in Sources */,
 				EC75E286258BA280002A7A9A /* Extensions.swift in Sources */,
@@ -397,9 +409,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8BTFB678DQ;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = EJDU37YJR6;
 				INFOPLIST_FILE = "unsplash-images/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -408,7 +420,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.axekoder.back.unsplash-images";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "WC_Dev_*";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -420,9 +432,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8BTFB678DQ;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = EJDU37YJR6;
 				INFOPLIST_FILE = "unsplash-images/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -431,7 +443,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.axekoder.back.unsplash-images";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "WC_Dev_*";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

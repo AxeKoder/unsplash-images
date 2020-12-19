@@ -8,19 +8,40 @@
 import UIKit
 
 class ListImageCell: UITableViewCell {
+    typealias CellData = (name: String?, imageUrl: String?, width: Int, height: Int)
     
     static let identifier = "ListImageCell"
     
     @IBOutlet weak var listImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     
-    typealias Data = (name: String?, imageUrl: String?, width: Int, height: Int)
+    override func prepareForReuse() {
+        listImage.image = nil
+    }
     
-    func setData(data: Data) {
+    func setData(index: Int, data: CellData) {
         guard let imageUrl = data.imageUrl else { return }
+        tag = index
         userName.text = data.name ?? ""
-        listImage.setImageFromURL(url: imageUrl)
+        setImageFromURL(rowIndex: index, url: imageUrl)
+        
+    }
+    
+    func setImageFromURL(rowIndex: Int, url: String) {
+        DispatchQueue.global().async {
+            let imageData = NSData.init(contentsOf: NSURL.init(string: url)! as URL)
+            DispatchQueue.main.async { [weak self] in
+                if self?.tag == rowIndex {
+                    let image = UIImage.init(data: imageData! as Data)
+                    self?.listImage.image = image
+                } else {
+                    print("cell index not match tag!!!")
+                }
+            }
+        }
     }
 
 }
+
+
 
