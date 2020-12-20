@@ -9,33 +9,81 @@ import UIKit
 
 class ListViewController: UIViewController {
     static let idSegueDetail = "IdSegueDetail"
-
-    @IBOutlet weak var tableView: UITableView!
+    
+    struct Constant {
+        static let dimAnimateDuration: TimeInterval = 0.3
+        static let dimScreenAlpha: CGFloat = 0.7
+        static let tableViewAnimateDuration: TimeInterval = 0.2
+    }
+    
+    @IBOutlet weak var listTableView: UITableView!
+    @IBOutlet weak var searchTableView: UITableView!
+    
     var cellData: [ListImageCell.CellData] = []
-    var currentPage: Int = 0
+    var searchCellData: [ListImageCell.CellData] = []
+    var currentListPage: Int = 0
+    var currentSearchPage: Int = 0
+    var currentQuery: String?
+    var totalPagesCount: Int = 0
+    var currentTable: UITableView!
+    let searchController: UISearchController = {
+        let search = UISearchController(searchResultsController: nil)
+        search.searchBar.placeholder = "Search photos"
+        return search
+    }()
+    
+    let dimmedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .darkGray
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        tableView.delegate = self
-        tableView.dataSource = self
         
+        listTableView.delegate = self
+        listTableView.dataSource = self
+        searchTableView.delegate = self
+        searchTableView.dataSource = self
+        currentTable = listTableView
+        
+        initUI()
         callListApi()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    func initUI() {
         view.alpha = 1.0
+        view.addSubview(dimmedView)
+        dimmedView.translatesAutoresizingMaskIntoConstraints = false
+        dimmedView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        dimmedView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        dimmedView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        dimmedView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        dimmedView.isHidden = true
+        
+        navigationItem.titleView = searchController.searchBar
+        searchController.searchResultsUpdater = self
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.tintColor = .white
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
     }
     
     func callListApi(listModel: ImageListModel = ImageListModel()) {
-        listModel.getImageList(page: currentPage, completion: { [weak self] in
+        currentListPage += 1
+        listModel.getImageList(page: currentListPage, completion: { [weak self] in
             switch $0 {
             case .success(let images):
                 self?.cellData.append(contentsOf: listModel.parseImageList(images: images))
                 DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+                    self?.listTableView.reloadData()
                 }
                 
             case .failure(let error):
@@ -43,9 +91,33 @@ class ListViewController: UIViewController {
             }
         })
     }
-
     
-    // MARK: - Navigation
+    func callSearchApi(
+        listModel: ImageListModel = ImageListModel(),
+        query: String?
+    ) {
+        currentSearchPage += 1
+        currentQuery = query
+        listModel.getSearchList(page: currentSearchPage, query: query ?? "") { [weak self] in
+                switch $0 {
+                case .success(let result):
+                    self?.hideDimmed()
+                    self?.searchCellData.append(contentsOf: listModel.parseSearchResultList(result: result))
+                    self?.totalPagesCount = listModel.parseSearchResultTotalPages(result: result)
+                        DispatchQueue.main.async {
+                            if self?.searchTableView.isHidden == true {
+                                self?.listTableView.isHidden = true
+                                self?.searchTableView.isHidden = false
+                            }
+                            self?.searchTableView.reloadData()
+                        }
+                    
+                case .failure(let error):
+                    self?.hideDimmed()
+                    print(error)
+                }
+        }
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -62,53 +134,152 @@ class ListViewController: UIViewController {
             }
         }
     }
+    
+    func showDimmed() {
+        DispatchQueue.main.async { [weak self] in
+            guard let dim = self?.dimmedView else { return }
+            dim.alpha = 0
+            self?.view.bringSubviewToFront(dim)
+            dim.isHidden = false
+            UIView.animate(withDuration: Constant.dimAnimateDuration, animations: {
+                self?.dimmedView.alpha = Constant.dimScreenAlpha
+            })
+        }
+        
+    }
+    
+    func hideDimmed() {
+        DispatchQueue.main.async { [weak self] in
+            UIView.animate(withDuration: Constant.dimAnimateDuration, animations: {
+                self?.dimmedView.alpha = 0
+            }, completion: { [weak self] _ in
+                self?.dimmedView.isHidden = true
+            })
+        }
+    }
 }
 
 extension ListViewController: PresentedViewControllerDelegate {
     func presentedBeingDismissed(indexPath: IndexPath, cellData: [ListImageCell.CellData]) {
-        self.cellData = cellData
-        tableView.reloadData()
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+        if currentTable == listTableView {
+            self.cellData = cellData
+        } else {
+            self.searchCellData = cellData
         }
+        currentTable.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.currentTable.scrollToRow(at: indexPath, at: .middle, animated: false)
+        }
+    }
+}
+
+extension ListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        print("updateSearchResults called")
+    }
+}
+
+extension ListViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        showDimmed()
+    }
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+
+    }
+}
+
+extension ListViewController: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+        hideDimmed()
+        currentTable = listTableView
+        listTableView.isHidden = false
+        searchTableView.isHidden = true
+        searchCellData.removeAll()
+        searchTableView.reloadData()
+        searchTableView.setContentOffset(CGPoint.zero, animated: false)
+        currentSearchPage = 0
+        
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+        currentTable = searchTableView
+        searchCellData.removeAll()
+        searchTableView.reloadData()
+        searchTableView.setContentOffset(CGPoint.zero, animated: false)
+        callSearchApi(query: searchBar.text)
     }
 }
 
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellData.count
+        return getCurrentData().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ListImageCell.identifier) as! ListImageCell
-        cell.setData(index: indexPath.row, data: cellData[indexPath.row])
+        let data = getCurrentData()
+        let rowData = indexPath.row < data.count ? data[indexPath.row] : nil
+        cell.setData(index: indexPath.row, data: rowData)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let item = cellData[indexPath.row]
+        let item = getCurrentData()[indexPath.row]
         let height = CGFloat(item.height) / CGFloat(item.width) * tableView.frame.width
         return height
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let lastIndex = cellData.count - 1
-        if indexPath.row == lastIndex {
-            currentPage += 1
-            callListApi()
+        let data = getCurrentData()
+        let lastIndex = data.count - 1
+        if tableView.contentOffset.y > 0 && indexPath.row == lastIndex {
+            if tableView == listTableView {
+                callListApi()
+            } else if tableView == searchTableView, currentSearchPage < totalPagesCount {
+                callSearchApi(query: searchController.searchBar.text)
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.2, animations: { [weak self] in
-            self?.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
-        }, completion: { [weak self, cellData, currentPage] _ in
-            let model = ImageListModel()
-            let detailCellData = model.parseToDetail(images: cellData)
-            let detailViewData = (index: indexPath.row, page: currentPage, listData: detailCellData)
+        currentTable = tableView
+        let data = getCurrentData()
+        let model = ImageListModel()
+        let detailCellData = model.parseToDetail(images: data)
+        let currentPageIndex = getCurrentPageIndex()
+        let detailViewData = (type: getCurrentType(), index: indexPath.row, page: currentPageIndex, totalPagesCount: totalPagesCount, query: currentQuery, listData: detailCellData)
+
+        UIView.animate(withDuration: Constant.tableViewAnimateDuration, animations: {
+            tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+        }, completion: { [weak self] _ in
             self?.performSegue(withIdentifier: ListViewController.idSegueDetail, sender: detailViewData)
         })
-        
-        
+    }
+    
+    func getCurrentData() -> [ListImageCell.CellData] {
+        if currentTable == listTableView {
+            return cellData
+        } else {
+            return searchCellData
+        }
+    }
+    
+    func getCurrentPageIndex() -> Int {
+        if currentTable == listTableView {
+            return currentListPage
+        } else {
+            return currentSearchPage
+        }
+    }
+    
+    func getCurrentType() -> DetailShowType {
+        if currentTable == listTableView {
+            return .list
+        } else {
+            return .search
+        }
     }
 }

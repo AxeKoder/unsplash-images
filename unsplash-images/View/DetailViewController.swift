@@ -11,12 +11,19 @@ protocol PresentedViewControllerDelegate {
     func presentedBeingDismissed(indexPath: IndexPath, cellData: [ListImageCell.CellData])
 }
 
+enum DetailShowType {
+    case list, search
+}
+
 class DetailViewController: UIViewController {
-    typealias DetailData = (index: Int, page: Int, listData: [DetailImageCell.CellData])
+    typealias DetailData = (type: DetailShowType, index: Int, page: Int, totalPagesCount: Int?, query: String?, listData: [DetailImageCell.CellData])
 
     @IBOutlet weak var collectionView: UICollectionView!
     var selectedIndex: Int = 0
+    var currentType: DetailShowType = .list
     var currentPage: Int = 0
+    var totalPagesCount: Int?
+    var query: String?
     var currentIndexPath: IndexPath = IndexPath()
     var cellData: [DetailImageCell.CellData] = []
     var isScrollDone = false
@@ -59,12 +66,16 @@ class DetailViewController: UIViewController {
     }
     
     func setData(_ data: DetailData) {
+        currentType = data.type
         selectedIndex = data.index
         cellData = data.listData
         currentPage = data.page
+        totalPagesCount = data.totalPagesCount
+        query = data.query
     }
     
     func callListApi(listModel: ImageListModel = ImageListModel()) {
+        currentPage += 1
         listModel.getImageList(page: currentPage, completion: { [weak self] in
             switch $0 {
             case .success(let images):
@@ -77,6 +88,23 @@ class DetailViewController: UIViewController {
                 print(error)
             }
         })
+    }
+    
+    func callSearchApi(listModel: ImageListModel = ImageListModel()) {
+        currentPage += 1
+        listModel.getSearchList(page: currentPage, query: query ?? "") { [weak self] in
+                switch $0 {
+                case .success(let result):
+                    self?.cellData.append(contentsOf: listModel.parseSearchResultList(result: result))
+                    self?.totalPagesCount = listModel.parseSearchResultTotalPages(result: result)
+                        DispatchQueue.main.async {
+                            self?.collectionView.reloadData()
+                        }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+        }
     }
     
     @IBAction func onBack(_ sender: Any) {
@@ -116,8 +144,11 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
             isScrollDone = true
         }
         if indexPath.row == cellData.count - 1 {
-            currentPage += 1
-            callListApi()
+            if currentType == .list {
+                callListApi()
+            } else if currentType == .search, currentPage < totalPagesCount ?? 0 {
+                callSearchApi()
+            }
         }
         currentIndexPath = indexPath
     }

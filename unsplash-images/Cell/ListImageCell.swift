@@ -19,10 +19,10 @@ class ListImageCell: UITableViewCell {
         listImage.image = nil
     }
     
-    func setData(index: Int, data: CellData) {
-        guard let imageUrl = data.imageUrl else { return }
+    func setData(index: Int, data: CellData?) {
+        guard let imageUrl = data?.imageUrl else { return }
         tag = index
-        userName.text = data.name ?? ""
+        userName.text = data?.name ?? ""
         setImageFromURL(tagNumber: index, url: imageUrl, imageView: listImage)   
     }
 }

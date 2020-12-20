@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct URLs: Decodable {
     let raw: String
     let full: String

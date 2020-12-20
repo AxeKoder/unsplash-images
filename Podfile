@@ -6,6 +6,5 @@ target 'unsplash-images' do
   use_frameworks!
 
   # Pods for unsplash-images
-#  pod 'UnsplashPhotoPicker', '~> 1.1.1'
 
 end

@@ -12,6 +12,7 @@
 		EC4DF1C3258919C9001D92A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C1258919C9001D92A2 /* Main.storyboard */; };
 		EC4DF1C5258919CB001D92A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C4258919CB001D92A2 /* Assets.xcassets */; };
 		EC4DF1C8258919CB001D92A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC4DF1C6258919CB001D92A2 /* LaunchScreen.storyboard */; };
+		EC70529E258F710E00848AAA /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC70529D258F710E00848AAA /* SearchResult.swift */; };
 		EC75E26A258A4DAA002A7A9A /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E269258A4DAA002A7A9A /* APIService.swift */; };
 		EC75E26F258A50FB002A7A9A /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E26E258A50FB002A7A9A /* Image.swift */; };
 		EC75E273258A51AE002A7A9A /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC75E272258A51AE002A7A9A /* URLs.swift */; };
@@ -33,6 +34,7 @@
 		EC4DF1C4258919CB001D92A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC4DF1C7258919CB001D92A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EC4DF1C9258919CB001D92A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC70529D258F710E00848AAA /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		EC75E269258A4DAA002A7A9A /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		EC75E26E258A50FB002A7A9A /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		EC75E272258A51AE002A7A9A /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				EC75E272258A51AE002A7A9A /* URLs.swift */,
 				EC75E27B258B9372002A7A9A /* User.swift */,
 				EC75E281258B9F14002A7A9A /* ImageListModel.swift */,
+				EC70529D258F710E00848AAA /* SearchResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				EC75E279258B9345002A7A9A /* ListViewController.swift in Sources */,
 				EC75E26F258A50FB002A7A9A /* Image.swift in Sources */,
 				EC75E286258BA280002A7A9A /* Extensions.swift in Sources */,
+				EC70529E258F710E00848AAA /* SearchResult.swift in Sources */,
 				EC75E26A258A4DAA002A7A9A /* APIService.swift in Sources */,
 				EC75E27F258B9942002A7A9A /* ListImageCell.swift in Sources */,
 				EC4DF1BC258919C9001D92A2 /* AppDelegate.swift in Sources */,
