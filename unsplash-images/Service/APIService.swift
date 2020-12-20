@@ -53,7 +53,6 @@ struct APIService {
     
     static func getList(page: Int?, per_page: Int?, completion: @escaping (Result<[Image], Error>) -> Void) {
         guard let urlRequest = urlList(page, per_page) else { return }
-        print("requesting url = \(urlRequest.url?.absoluteString ?? "")")
         dataTask(urlRequest: urlRequest, completion: completion)
     }
     
