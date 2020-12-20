@@ -14,6 +14,7 @@ class ListViewController: UIViewController {
         static let dimAnimateDuration: TimeInterval = 0.3
         static let dimScreenAlpha: CGFloat = 0.7
         static let tableViewAnimateDuration: TimeInterval = 0.2
+        static let defaultCellHeight: CGFloat = 100.0
     }
     
     @IBOutlet weak var listTableView: UITableView!
@@ -68,7 +69,6 @@ class ListViewController: UIViewController {
         dimmedView.isHidden = true
         
         navigationItem.titleView = searchController.searchBar
-        searchController.searchResultsUpdater = self
         searchController.delegate = self
         searchController.searchBar.delegate = self
         searchController.searchBar.tintColor = .white
@@ -99,23 +99,22 @@ class ListViewController: UIViewController {
         currentSearchPage += 1
         currentQuery = query
         listModel.getSearchList(page: currentSearchPage, query: query ?? "") { [weak self] in
-                switch $0 {
-                case .success(let result):
-                    self?.hideDimmed()
-                    self?.searchCellData.append(contentsOf: listModel.parseSearchResultList(result: result))
-                    self?.totalPagesCount = listModel.parseSearchResultTotalPages(result: result)
-                        DispatchQueue.main.async {
-                            if self?.searchTableView.isHidden == true {
-                                self?.listTableView.isHidden = true
-                                self?.searchTableView.isHidden = false
-                            }
-                            self?.searchTableView.reloadData()
-                        }
-                    
-                case .failure(let error):
-                    self?.hideDimmed()
-                    print(error)
+            self?.hideDimmed()
+            switch $0 {
+            case .success(let result):
+                self?.searchCellData.append(contentsOf: listModel.parseSearchResultList(result: result))
+                self?.totalPagesCount = listModel.parseSearchResultTotalPages(result: result)
+                DispatchQueue.main.async {
+                    if self?.searchTableView.isHidden == true {
+                        self?.listTableView.isHidden = true
+                        self?.searchTableView.isHidden = false
+                    }
+                    self?.searchTableView.reloadData()
                 }
+                
+            case .failure(let error):
+                print(error)
+            }
         }
     }
 
@@ -173,19 +172,9 @@ extension ListViewController: PresentedViewControllerDelegate {
     }
 }
 
-extension ListViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        print("updateSearchResults called")
-    }
-}
-
 extension ListViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
         showDimmed()
-    }
-    
-    func didDismissSearchController(_ searchController: UISearchController) {
-
     }
 }
 
@@ -218,16 +207,21 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         return getCurrentData().count
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ListImageCell.identifier) as! ListImageCell
         let data = getCurrentData()
-        let rowData = indexPath.row < data.count ? data[indexPath.row] : nil
+        let rowData = data[safe: indexPath.row]
         cell.setData(index: indexPath.row, data: rowData)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let item = getCurrentData()[indexPath.row]
+        let safeItem = getCurrentData()[safe: indexPath.row]
+        guard let item = safeItem else { return Constant.defaultCellHeight }
         let height = CGFloat(item.height) / CGFloat(item.width) * tableView.frame.width
         return height
     }

@@ -7,19 +7,8 @@
 
 import UIKit
 
-extension UIImageView {
-    func setImageFromURL(url: String) {
-        DispatchQueue.global().async {
-            let data = NSData.init(contentsOf: NSURL.init(string: url)! as URL)
-            DispatchQueue.main.async {
-                let image = UIImage.init(data: data! as Data)
-                self.image = image
-            }
-        }
-    }
-}
-
 extension UIView {
+    // return cached image
     func setImageFromURL(tagNumber: Int, url: String, imageView: UIImageView) {
         tag = tagNumber
         if let image = ImageCacheService.shared.getCache(key: url) {
@@ -38,5 +27,11 @@ extension UIView {
                 }
             }
         }
+    }
+}
+
+extension Array {
+    subscript (safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
     }
 }
